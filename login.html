@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - EduPortal</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            overflow: hidden;
+        }
+
+        .login-container {
+            max-width: 550px;
+            width: 100%;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 0 20px;
+            margin-top: 40px;
+        }
+
+        .login-box {
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px 45px;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.5);
+        }
+
+        .login-icon i {
+            font-size: 32px;
+            color: white;
+        }
+
+        .login-header h1 {
+            background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 26px;
+            margin-bottom: 8px;
+        }
+
+        .login-header p {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-group label i {
+            color: #667eea;
+        }
+
+        .form-group input {
+            padding: 14px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+        }
+
+        .error-message {
+            color: #ef4444;
+            font-size: 13px;
+            display: none;
+            margin-top: 5px;
+        }
+
+        .login-btn {
+            padding: 15px;
+            margin-top: 8px;
+            background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+        }
+
+        .login-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .back-home {
+            text-align: center;
+            margin-top: 18px;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .back-home a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .back-home a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        .admin-info {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border-radius: 10px;
+            padding: 14px;
+            margin-bottom: 22px;
+            border-left: 4px solid #667eea;
+        }
+
+        .admin-info p {
+            margin: 0;
+            color: #4b5563;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .admin-info strong {
+            color: #1f2937;
+        }
+
+        @media (max-height: 700px) {
+            .login-container {
+                margin-top: 30px;
+                max-height: 95vh;
+                overflow-y: auto;
+            }
+            
+            body {
+                overflow-y: auto;
+            }
+            
+            .login-box {
+                padding: 30px 40px;
+            }
+            
+            .login-icon {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .login-icon i {
+                font-size: 28px;
+            }
+            
+            .login-header h1 {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .login-container {
+                max-width: 95%;
+                padding: 0 15px;
+            }
+            
+            .login-box {
+                padding: 35px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>EduPortal</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="login-container">
+        <div class="login-box">
+            <div class="login-header">
+                <div class="login-icon">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <h1>Admin Login</h1>
+                <p>Sign in to access the admin dashboard</p>
+            </div>
+
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label for="username">
+                        <i class="fas fa-user"></i> Username
+                    </label>
+                    <input type="text" id="username" name="username" placeholder="Enter username" required autocomplete="username">
+                    <span class="error-message" id="usernameError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">
+                        <i class="fas fa-lock"></i> Password
+                    </label>
+                    <input type="password" id="password" name="password" placeholder="Enter password" required autocomplete="current-password">
+                    <span class="error-message" id="passwordError"></span>
+                </div>
+
+                <button type="submit" class="login-btn" id="loginBtn">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+            </form>
+
+            <div class="back-home">
+                <a href="index.html"><i class="fas fa-arrow-left"></i> Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Check if already logged in
+            if (localStorage.getItem('adminToken')) {
+                window.location.href = 'admin.html';
+                return;
+            }
+
+            $('#loginForm').on('submit', function(e) {
+                e.preventDefault();
+
+                // Clear previous errors
+                $('.error-message').hide();
+
+                const username = $('#username').val().trim();
+                const password = $('#password').val();
+
+                // Validate
+                if (!username) {
+                    $('#usernameError').text('Username is required').show();
+                    return;
+                }
+
+                if (!password) {
+                    $('#passwordError').text('Password is required').show();
+                    return;
+                }
+
+                // Check credentials
+                if (username === 'admin' && password === 'admin123') {
+                    // Show loading
+                    $('#loginBtn').html('<i class="fas fa-spinner fa-spin"></i> Logging in...').prop('disabled', true);
+
+                    // Simulate authentication
+                    setTimeout(function() {
+                        // Set admin token
+                        localStorage.setItem('adminToken', 'admin_' + Date.now());
+                        
+                        // Redirect to admin page
+                        window.location.href = 'admin.html';
+                    }, 1000);
+                } else {
+                    $('#passwordError').text('Invalid username or password').show();
+                    
+                    // Shake animation
+                    $('.login-box').css('animation', 'shake 0.5s');
+                    setTimeout(function() {
+                        $('.login-box').css('animation', '');
+                    }, 500);
+                }
+            });
+
+            // Add shake animation
+            $('<style>')
+                .text('@keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }')
+                .appendTo('head');
+        });
+    </script>
+</body>
+</html>
